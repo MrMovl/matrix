@@ -8966,6 +8966,71 @@ Elm.Json.Decode.make = function (_elm) {
                                     ,value: value
                                     ,customDecoder: customDecoder};
 };
+Elm.Native = Elm.Native || {};
+Elm.Native.Mouse = {};
+Elm.Native.Mouse.make = function(localRuntime) {
+	localRuntime.Native = localRuntime.Native || {};
+	localRuntime.Native.Mouse = localRuntime.Native.Mouse || {};
+	if (localRuntime.Native.Mouse.values)
+	{
+		return localRuntime.Native.Mouse.values;
+	}
+
+	var NS = Elm.Native.Signal.make(localRuntime);
+	var Utils = Elm.Native.Utils.make(localRuntime);
+
+	var position = NS.input('Mouse.position', Utils.Tuple2(0, 0));
+
+	var isDown = NS.input('Mouse.isDown', false);
+
+	var clicks = NS.input('Mouse.clicks', Utils.Tuple0);
+
+	var node = localRuntime.isFullscreen()
+		? document
+		: localRuntime.node;
+
+	localRuntime.addListener([clicks.id], node, 'click', function click() {
+		localRuntime.notify(clicks.id, Utils.Tuple0);
+	});
+	localRuntime.addListener([isDown.id], node, 'mousedown', function down() {
+		localRuntime.notify(isDown.id, true);
+	});
+	localRuntime.addListener([isDown.id], node, 'mouseup', function up() {
+		localRuntime.notify(isDown.id, false);
+	});
+	localRuntime.addListener([position.id], node, 'mousemove', function move(e) {
+		localRuntime.notify(position.id, Utils.getXY(e));
+	});
+
+	return localRuntime.Native.Mouse.values = {
+		position: position,
+		isDown: isDown,
+		clicks: clicks
+	};
+};
+
+Elm.Mouse = Elm.Mouse || {};
+Elm.Mouse.make = function (_elm) {
+   "use strict";
+   _elm.Mouse = _elm.Mouse || {};
+   if (_elm.Mouse.values) return _elm.Mouse.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Native$Mouse = Elm.Native.Mouse.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var clicks = $Native$Mouse.clicks;
+   var isDown = $Native$Mouse.isDown;
+   var position = $Native$Mouse.position;
+   var x = A2($Signal.map,$Basics.fst,position);
+   var y = A2($Signal.map,$Basics.snd,position);
+   return _elm.Mouse.values = {_op: _op
+                              ,position: position
+                              ,x: x
+                              ,y: y
+                              ,isDown: isDown
+                              ,clicks: clicks};
+};
 Elm.Random = Elm.Random || {};
 Elm.Random.make = function (_elm) {
    "use strict";
@@ -11771,192 +11836,1010 @@ Elm.Matrix.make = function (_elm) {
    $Html$Events = Elm.Html.Events.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
-   $Random = Elm.Random.make(_elm),
-   $Random$Array = Elm.Random.Array.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
    $String = Elm.String.make(_elm);
    var _op = {};
-   var numbers = $Array.fromList(_U.list([0
-                                         ,1
-                                         ,2
-                                         ,3
-                                         ,4
-                                         ,5
+   var numbers = $Array.fromList(_U.list([31
+                                         ,52
+                                         ,62
+                                         ,53
+                                         ,85
+                                         ,74
+                                         ,51
+                                         ,77
+                                         ,24
+                                         ,64
+                                         ,99
+                                         ,82
                                          ,6
+                                         ,59
+                                         ,58
+                                         ,15
+                                         ,49
+                                         ,47
+                                         ,66
+                                         ,72
+                                         ,34
+                                         ,96
+                                         ,64
+                                         ,72
+                                         ,56
+                                         ,29
+                                         ,10
+                                         ,63
+                                         ,11
+                                         ,57
                                          ,7
+                                         ,17
+                                         ,83
+                                         ,47
+                                         ,15
+                                         ,76
+                                         ,43
+                                         ,38
+                                         ,45
+                                         ,69
+                                         ,68
+                                         ,31
+                                         ,16
+                                         ,40
+                                         ,42
+                                         ,98
+                                         ,21
+                                         ,62
+                                         ,88
+                                         ,79
+                                         ,63
+                                         ,82
+                                         ,34
+                                         ,24
+                                         ,96
+                                         ,71
+                                         ,62
+                                         ,85
+                                         ,81
+                                         ,28
+                                         ,71
                                          ,8
+                                         ,21
+                                         ,93
+                                         ,15
+                                         ,17
+                                         ,92
+                                         ,11
+                                         ,82
+                                         ,69
+                                         ,66
+                                         ,46
+                                         ,60
+                                         ,51
+                                         ,32
+                                         ,44
+                                         ,54
+                                         ,80
+                                         ,22
+                                         ,46
+                                         ,44
+                                         ,61
+                                         ,99
+                                         ,23
+                                         ,71
                                          ,9
-                                         ,0
-                                         ,1
-                                         ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
-                                         ,7
-                                         ,8
+                                         ,48
+                                         ,62
                                          ,9
-                                         ,0
-                                         ,1
-                                         ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
                                          ,7
+                                         ,73
+                                         ,91
+                                         ,16
+                                         ,50
+                                         ,69
+                                         ,89
+                                         ,34
+                                         ,38
+                                         ,28
+                                         ,51
+                                         ,81
+                                         ,62
+                                         ,72
+                                         ,100
+                                         ,92
+                                         ,53
+                                         ,44
+                                         ,73
+                                         ,17
+                                         ,67
+                                         ,41
+                                         ,49
+                                         ,30
+                                         ,13
+                                         ,16
+                                         ,21
+                                         ,20
+                                         ,58
+                                         ,94
+                                         ,74
+                                         ,32
+                                         ,70
+                                         ,33
+                                         ,53
+                                         ,59
+                                         ,93
+                                         ,40
+                                         ,10
+                                         ,51
+                                         ,86
+                                         ,88
+                                         ,75
+                                         ,3
+                                         ,14
                                          ,8
+                                         ,48
+                                         ,84
+                                         ,19
+                                         ,86
+                                         ,40
+                                         ,67
+                                         ,42
+                                         ,14
+                                         ,74
+                                         ,52
+                                         ,15
+                                         ,68
+                                         ,35
+                                         ,32
+                                         ,79
+                                         ,1
+                                         ,30
+                                         ,61
+                                         ,64
+                                         ,72
+                                         ,39
+                                         ,96
+                                         ,97
+                                         ,71
+                                         ,16
+                                         ,36
+                                         ,81
+                                         ,65
+                                         ,49
+                                         ,12
+                                         ,65
+                                         ,72
+                                         ,34
+                                         ,69
+                                         ,75
+                                         ,33
+                                         ,25
+                                         ,19
+                                         ,97
+                                         ,41
+                                         ,2
+                                         ,63
+                                         ,47
+                                         ,74
+                                         ,38
+                                         ,22
+                                         ,35
+                                         ,17
+                                         ,68
+                                         ,22
+                                         ,89
+                                         ,94
+                                         ,48
+                                         ,35
+                                         ,54
+                                         ,57
+                                         ,59
+                                         ,86
+                                         ,88
+                                         ,97
+                                         ,65
+                                         ,35
+                                         ,5
+                                         ,92
+                                         ,92
+                                         ,99
+                                         ,62
+                                         ,88
+                                         ,25
+                                         ,52
+                                         ,45
+                                         ,98
+                                         ,11
+                                         ,96
+                                         ,12
+                                         ,11
+                                         ,96
+                                         ,89
+                                         ,1
+                                         ,85
+                                         ,88
+                                         ,75
+                                         ,28
+                                         ,25
+                                         ,93
+                                         ,76
+                                         ,64
+                                         ,64
+                                         ,20
+                                         ,27
+                                         ,83
+                                         ,40
+                                         ,22
+                                         ,58
+                                         ,24
+                                         ,43
+                                         ,6
+                                         ,31
+                                         ,5
+                                         ,28
+                                         ,45
+                                         ,1
+                                         ,50
+                                         ,30
+                                         ,58
+                                         ,85
+                                         ,47
+                                         ,20
+                                         ,13
+                                         ,89
+                                         ,91
+                                         ,61
+                                         ,64
+                                         ,35
+                                         ,53
+                                         ,13
+                                         ,49
+                                         ,58
+                                         ,53
+                                         ,62
+                                         ,37
+                                         ,40
+                                         ,12
+                                         ,46
+                                         ,69
+                                         ,70
+                                         ,17
+                                         ,29
+                                         ,69
+                                         ,94
+                                         ,73
+                                         ,1
+                                         ,99
+                                         ,40
+                                         ,75
+                                         ,28
+                                         ,42
+                                         ,33
+                                         ,88
+                                         ,69
+                                         ,56
+                                         ,92
+                                         ,29
+                                         ,37
+                                         ,10
+                                         ,71
                                          ,9
-                                         ,0
-                                         ,1
-                                         ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
-                                         ,7
+                                         ,95
+                                         ,24
                                          ,8
+                                         ,27
+                                         ,89
                                          ,9
-                                         ,0
-                                         ,1
+                                         ,66
+                                         ,22
+                                         ,38
+                                         ,36
+                                         ,93
+                                         ,43
+                                         ,59
+                                         ,92
+                                         ,10
+                                         ,25
+                                         ,73
+                                         ,51
+                                         ,62
+                                         ,15
+                                         ,31
+                                         ,46
+                                         ,91
+                                         ,52
+                                         ,99
+                                         ,81
                                          ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
-                                         ,7
+                                         ,37
+                                         ,2
+                                         ,89
+                                         ,30
+                                         ,2
+                                         ,37
+                                         ,83
+                                         ,82
+                                         ,79
+                                         ,49
+                                         ,22
+                                         ,64
+                                         ,62
+                                         ,46
+                                         ,19
+                                         ,77
+                                         ,56
+                                         ,47
+                                         ,34
+                                         ,40
+                                         ,92
+                                         ,91
+                                         ,84
+                                         ,20
+                                         ,84
+                                         ,82
+                                         ,68
+                                         ,68
+                                         ,74
+                                         ,94
+                                         ,82
+                                         ,29
+                                         ,67
+                                         ,33
+                                         ,91
+                                         ,98
+                                         ,24
+                                         ,50
+                                         ,37
+                                         ,52
                                          ,8
+                                         ,77
+                                         ,44
+                                         ,72
+                                         ,38
+                                         ,71
+                                         ,78
+                                         ,11
+                                         ,75
+                                         ,35
+                                         ,48
+                                         ,26
+                                         ,42
+                                         ,78
+                                         ,41
+                                         ,85
+                                         ,70
+                                         ,43
+                                         ,75
+                                         ,38
+                                         ,88
+                                         ,30
+                                         ,90
+                                         ,75
+                                         ,35
+                                         ,72
+                                         ,91
+                                         ,29
+                                         ,46
+                                         ,96
+                                         ,27
+                                         ,1
+                                         ,44
+                                         ,32
+                                         ,81
+                                         ,30
+                                         ,45
+                                         ,23
+                                         ,57
+                                         ,75
+                                         ,59
+                                         ,4
+                                         ,41
+                                         ,20
+                                         ,51
+                                         ,92
+                                         ,54
+                                         ,34
+                                         ,84
+                                         ,81
+                                         ,46
+                                         ,76
+                                         ,85
+                                         ,4
+                                         ,62
+                                         ,15
+                                         ,26
+                                         ,21
+                                         ,69
+                                         ,8
+                                         ,37
+                                         ,24
+                                         ,93
+                                         ,22
+                                         ,75
+                                         ,36
+                                         ,50
+                                         ,81
+                                         ,69
+                                         ,40
+                                         ,29
+                                         ,31
+                                         ,49
+                                         ,44
+                                         ,21
+                                         ,83
+                                         ,19
+                                         ,93
+                                         ,53
+                                         ,91
+                                         ,78
+                                         ,95
+                                         ,95
+                                         ,62
+                                         ,27
+                                         ,73
+                                         ,92
+                                         ,40
+                                         ,62
+                                         ,33
+                                         ,85
+                                         ,17
+                                         ,15
+                                         ,24
+                                         ,34
+                                         ,90
+                                         ,60
+                                         ,69
+                                         ,4
+                                         ,7
+                                         ,22
+                                         ,17
+                                         ,46
+                                         ,35
+                                         ,79
+                                         ,25
+                                         ,24
+                                         ,75
+                                         ,77
+                                         ,46
+                                         ,35
+                                         ,10
+                                         ,98
+                                         ,40
+                                         ,45
+                                         ,70
+                                         ,81
+                                         ,15
+                                         ,31
+                                         ,18
+                                         ,93
+                                         ,39
+                                         ,28
+                                         ,53
+                                         ,13
+                                         ,37
+                                         ,33
+                                         ,32
+                                         ,68
+                                         ,4
+                                         ,27
+                                         ,37
+                                         ,87
+                                         ,18
+                                         ,91
+                                         ,89
+                                         ,55
+                                         ,35
+                                         ,78
+                                         ,60
+                                         ,14
+                                         ,86
+                                         ,71
+                                         ,100
+                                         ,35
+                                         ,2
+                                         ,84
+                                         ,1
+                                         ,84
+                                         ,66
+                                         ,65
                                          ,9
-                                         ,0
-                                         ,1
-                                         ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
-                                         ,7
-                                         ,8
                                          ,9
-                                         ,0
-                                         ,1
-                                         ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
-                                         ,7
-                                         ,8
+                                         ,48
+                                         ,55
+                                         ,64
+                                         ,34
+                                         ,52
+                                         ,99
+                                         ,53
+                                         ,38
+                                         ,46
+                                         ,75
+                                         ,68
+                                         ,60
+                                         ,90
+                                         ,85
                                          ,9
-                                         ,0
-                                         ,1
-                                         ,2
-                                         ,3
+                                         ,91
+                                         ,56
                                          ,4
-                                         ,5
-                                         ,6
-                                         ,7
+                                         ,85
+                                         ,85
+                                         ,11
+                                         ,71
+                                         ,88
+                                         ,85
+                                         ,57
+                                         ,18
+                                         ,14
+                                         ,93
+                                         ,19
+                                         ,41
+                                         ,64
+                                         ,36
+                                         ,85
+                                         ,98
                                          ,8
+                                         ,42
+                                         ,54
+                                         ,57
+                                         ,21
+                                         ,18
+                                         ,41
+                                         ,15
+                                         ,55
+                                         ,36
+                                         ,6
+                                         ,71
+                                         ,51
+                                         ,27
+                                         ,69
+                                         ,14
+                                         ,85
+                                         ,55
+                                         ,11
+                                         ,82
+                                         ,14
+                                         ,14
+                                         ,33
+                                         ,6
+                                         ,47
+                                         ,100
+                                         ,22
+                                         ,20
+                                         ,41
+                                         ,47
+                                         ,68
+                                         ,64
+                                         ,18
+                                         ,95
+                                         ,60
+                                         ,50
+                                         ,15
+                                         ,1
+                                         ,39
+                                         ,98
+                                         ,70
+                                         ,85
+                                         ,59
+                                         ,2
+                                         ,10
+                                         ,1
+                                         ,46
+                                         ,17
+                                         ,92
+                                         ,36
+                                         ,10
+                                         ,54
+                                         ,89
+                                         ,65
+                                         ,43
+                                         ,23
+                                         ,18
+                                         ,35
+                                         ,74
+                                         ,82
+                                         ,86
+                                         ,84
+                                         ,61
+                                         ,61
+                                         ,25
+                                         ,58
+                                         ,97
+                                         ,34
+                                         ,91
+                                         ,25
+                                         ,71
+                                         ,14
+                                         ,13
+                                         ,86
+                                         ,5
+                                         ,91
+                                         ,49
+                                         ,24
+                                         ,11
+                                         ,72
+                                         ,3
+                                         ,27
+                                         ,39
+                                         ,66
+                                         ,81
+                                         ,17
+                                         ,74
+                                         ,51
+                                         ,62
+                                         ,44
+                                         ,3
+                                         ,7
+                                         ,85
+                                         ,79
+                                         ,40
+                                         ,76
+                                         ,77
+                                         ,59
+                                         ,23
+                                         ,73
+                                         ,67
+                                         ,43
+                                         ,93
+                                         ,64
+                                         ,51
+                                         ,68
+                                         ,19
+                                         ,1
+                                         ,49
+                                         ,60
+                                         ,93
+                                         ,15
+                                         ,95
+                                         ,17
+                                         ,55
+                                         ,69
+                                         ,74
+                                         ,85
+                                         ,60
+                                         ,65
+                                         ,59
+                                         ,59
+                                         ,89
+                                         ,17
+                                         ,55
+                                         ,42
+                                         ,52
+                                         ,18
+                                         ,52
+                                         ,29
+                                         ,6
+                                         ,15
+                                         ,31
+                                         ,47
+                                         ,6
+                                         ,95
+                                         ,41
+                                         ,99
+                                         ,38
+                                         ,36
+                                         ,22
+                                         ,77
+                                         ,90
+                                         ,96
+                                         ,67
+                                         ,35
+                                         ,72
+                                         ,1
+                                         ,79
+                                         ,91
+                                         ,38
+                                         ,81
+                                         ,16
+                                         ,40
+                                         ,56
+                                         ,70
+                                         ,31
+                                         ,74
+                                         ,61
+                                         ,88
+                                         ,67
+                                         ,2
+                                         ,98
+                                         ,4
+                                         ,43
+                                         ,92
+                                         ,85
+                                         ,25
+                                         ,27
+                                         ,36
+                                         ,95
+                                         ,24
+                                         ,8
+                                         ,22
+                                         ,36
+                                         ,34
+                                         ,50
+                                         ,50
+                                         ,8
+                                         ,92
+                                         ,94
+                                         ,33
+                                         ,26
+                                         ,89
+                                         ,79
+                                         ,18
+                                         ,10
                                          ,9
-                                         ,0
-                                         ,1
-                                         ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
-                                         ,7
+                                         ,17
                                          ,8
+                                         ,29
+                                         ,66
+                                         ,91
+                                         ,90
+                                         ,73
+                                         ,47
+                                         ,70
+                                         ,51
+                                         ,65
+                                         ,56
+                                         ,56
+                                         ,1
+                                         ,70
+                                         ,61
+                                         ,59
+                                         ,17
+                                         ,85
+                                         ,53
+                                         ,19
+                                         ,19
+                                         ,13
+                                         ,85
+                                         ,85
+                                         ,48
+                                         ,26
+                                         ,10
+                                         ,35
+                                         ,89
+                                         ,63
+                                         ,87
+                                         ,20
+                                         ,30
+                                         ,62
+                                         ,93
+                                         ,26
+                                         ,65
+                                         ,10
+                                         ,85
+                                         ,83
+                                         ,57
+                                         ,4
+                                         ,79
+                                         ,65
+                                         ,42
+                                         ,96
+                                         ,6
+                                         ,90
+                                         ,65
+                                         ,88
+                                         ,61
+                                         ,53
+                                         ,76
+                                         ,31
+                                         ,4
+                                         ,88
+                                         ,97
+                                         ,50
+                                         ,48
+                                         ,19
+                                         ,59
+                                         ,88
+                                         ,29
+                                         ,45
+                                         ,91
+                                         ,8
+                                         ,2
+                                         ,12
+                                         ,48
+                                         ,5
+                                         ,45
+                                         ,30
+                                         ,38
+                                         ,46
+                                         ,41
+                                         ,57
+                                         ,8
+                                         ,46
+                                         ,87
+                                         ,42
+                                         ,31
+                                         ,70
+                                         ,51
+                                         ,23
+                                         ,47
+                                         ,45
+                                         ,48
+                                         ,16
+                                         ,42
+                                         ,86
+                                         ,61
+                                         ,63
+                                         ,63
+                                         ,81
+                                         ,26
+                                         ,77
+                                         ,55
+                                         ,64
+                                         ,65
+                                         ,53
+                                         ,39
+                                         ,94
+                                         ,78
+                                         ,65
+                                         ,42
+                                         ,57
+                                         ,51
+                                         ,80
+                                         ,7
+                                         ,19
+                                         ,22
+                                         ,6
+                                         ,95
+                                         ,71
+                                         ,34
+                                         ,25
+                                         ,35
+                                         ,98
+                                         ,82
+                                         ,94
+                                         ,44
+                                         ,42
+                                         ,47
+                                         ,37
+                                         ,94
+                                         ,5
+                                         ,19
+                                         ,54
+                                         ,29
+                                         ,2
+                                         ,84
+                                         ,14
+                                         ,84
+                                         ,71
+                                         ,74
+                                         ,14
+                                         ,1
+                                         ,20
+                                         ,33
+                                         ,54
+                                         ,64
+                                         ,54
+                                         ,58
+                                         ,59
+                                         ,67
+                                         ,87
+                                         ,19
+                                         ,91
+                                         ,50
+                                         ,37
+                                         ,76
+                                         ,67
+                                         ,10
+                                         ,33
+                                         ,87
+                                         ,92
+                                         ,34
+                                         ,39
+                                         ,14
+                                         ,76
+                                         ,37
+                                         ,39
+                                         ,74
+                                         ,83
+                                         ,90
+                                         ,44
+                                         ,40
+                                         ,24
+                                         ,94
+                                         ,20
+                                         ,70
+                                         ,32
+                                         ,90
+                                         ,53
+                                         ,78
+                                         ,15
+                                         ,2
+                                         ,96
+                                         ,39
+                                         ,39
+                                         ,91
+                                         ,92
+                                         ,32
+                                         ,66
+                                         ,100
+                                         ,89
+                                         ,4
                                          ,9
-                                         ,0
-                                         ,1
-                                         ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
-                                         ,7
+                                         ,96
+                                         ,59
+                                         ,30
+                                         ,20
+                                         ,40
+                                         ,81
                                          ,8
-                                         ,9
-                                         ,0
+                                         ,98
+                                         ,82
+                                         ,87
+                                         ,25
+                                         ,14
+                                         ,28
+                                         ,14
+                                         ,55
+                                         ,93
                                          ,1
-                                         ,2
+                                         ,24
+                                         ,53
+                                         ,79
+                                         ,73
+                                         ,88
                                          ,3
+                                         ,43
+                                         ,45
+                                         ,98
+                                         ,77
                                          ,4
-                                         ,5
-                                         ,6
-                                         ,7
-                                         ,8
-                                         ,9
-                                         ,0
-                                         ,1
+                                         ,76
+                                         ,82
+                                         ,73
+                                         ,93
+                                         ,86
+                                         ,53
                                          ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
-                                         ,7
-                                         ,8
-                                         ,9
-                                         ,0
-                                         ,1
+                                         ,98
+                                         ,85
                                          ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
-                                         ,7
-                                         ,8
-                                         ,9
-                                         ,0
-                                         ,1
                                          ,2
-                                         ,3
-                                         ,4
-                                         ,5
+                                         ,73
                                          ,6
-                                         ,7
-                                         ,8
-                                         ,9
-                                         ,0
-                                         ,1
-                                         ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
-                                         ,7
-                                         ,8
-                                         ,9
-                                         ,0
-                                         ,1
-                                         ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
-                                         ,7
-                                         ,8
-                                         ,9
-                                         ,0
-                                         ,1
-                                         ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
-                                         ,7
-                                         ,8
-                                         ,9
-                                         ,0
-                                         ,1
-                                         ,2
-                                         ,3
-                                         ,4
-                                         ,5
-                                         ,6
-                                         ,7
-                                         ,8
-                                         ,9]));
+                                         ,77
+                                         ,14
+                                         ,22
+                                         ,25
+                                         ,27
+                                         ,79
+                                         ,22
+                                         ,41
+                                         ,69
+                                         ,38
+                                         ,97
+                                         ,70
+                                         ,84
+                                         ,66
+                                         ,86
+                                         ,88
+                                         ,93
+                                         ,55
+                                         ,53
+                                         ,49
+                                         ,38
+                                         ,42
+                                         ,31
+                                         ,72
+                                         ,95
+                                         ,39
+                                         ,62
+                                         ,86
+                                         ,92
+                                         ,80
+                                         ,19
+                                         ,65
+                                         ,53
+                                         ,64
+                                         ,70
+                                         ,18
+                                         ,78
+                                         ,40
+                                         ,27
+                                         ,68
+                                         ,38
+                                         ,38
+                                         ,33
+                                         ,100
+                                         ,26
+                                         ,6]));
    var cellStyle = $Html$Attributes.style(_U.list([{ctor: "_Tuple2"
                                                    ,_0: "border"
                                                    ,_1: "1px solid black"}
@@ -12016,71 +12899,62 @@ Elm.Matrix.make = function (_elm) {
       },
       list);
    });
+   var addUnique = F2(function (list,dimension) {
+      return A2($List._op["::"],
+      dimension,
+      A2(dropDimension,list,dimension));
+   });
    var distToRows = function (model) {
-      return {rowDimensions: A2($List._op["::"],
-             distributionChannel,
-             model.rowDimensions)
+      return {rowDimensions: A2(addUnique,
+             model.rowDimensions,
+             distributionChannel)
              ,columnDimensions: A2(dropDimension,
              model.columnDimensions,
              distributionChannel)
-             ,factor: model.factor
-             ,data: model.data
-             ,seed: model.seed};
+             ,data: model.data};
    };
    var distToColumns = function (model) {
       return {rowDimensions: A2(dropDimension,
              model.rowDimensions,
              distributionChannel)
-             ,columnDimensions: A2($List._op["::"],
-             distributionChannel,
-             model.columnDimensions)
-             ,factor: model.factor
-             ,data: model.data
-             ,seed: model.seed};
+             ,columnDimensions: A2(addUnique,
+             model.columnDimensions,
+             distributionChannel)
+             ,data: model.data};
    };
    var regionToRows = function (model) {
-      return {rowDimensions: A2(dropDimension,
+      return {rowDimensions: A2(addUnique,
              model.rowDimensions,
              regionCode)
-             ,columnDimensions: A2($List._op["::"],
-             regionCode,
-             model.columnDimensions)
-             ,factor: model.factor
-             ,data: model.data
-             ,seed: model.seed};
+             ,columnDimensions: A2(dropDimension,
+             model.columnDimensions,
+             regionCode)
+             ,data: model.data};
    };
    var regionToColumns = function (model) {
       return {rowDimensions: A2(dropDimension,
              model.rowDimensions,
              regionCode)
-             ,columnDimensions: A2($List._op["::"],
-             regionCode,
-             model.columnDimensions)
-             ,factor: model.factor
-             ,data: model.data
-             ,seed: model.seed};
+             ,columnDimensions: A2(addUnique,
+             model.columnDimensions,
+             regionCode)
+             ,data: model.data};
    };
    var quarterToRows = function (model) {
-      return {rowDimensions: A2(dropDimension,
+      return {rowDimensions: A2(addUnique,
              model.rowDimensions,
              quarter)
-             ,columnDimensions: A2($List._op["::"],
-             quarter,
-             model.columnDimensions)
-             ,factor: model.factor
-             ,data: model.data
-             ,seed: model.seed};
+             ,columnDimensions: A2(dropDimension,
+             model.columnDimensions,
+             quarter)
+             ,data: model.data};
    };
    var quarterToColumns = function (model) {
       return {rowDimensions: A2(dropDimension,
              model.rowDimensions,
              quarter)
-             ,columnDimensions: A2($List._op["::"],
-             quarter,
-             model.columnDimensions)
-             ,factor: model.factor
-             ,data: model.data
-             ,seed: model.seed};
+             ,columnDimensions: A2(addUnique,model.columnDimensions,quarter)
+             ,data: model.data};
    };
    var CreateRandom = {ctor: "CreateRandom"};
    var QuarterToColumns = {ctor: "QuarterToColumns"};
@@ -12123,7 +12997,6 @@ Elm.Matrix.make = function (_elm) {
               ,A2($Html.button,
               _U.list([A2($Html$Events.onClick,address,QuarterToColumns)]),
               _U.list([$Html.text("Quarter to columns")]))
-              ,drawTable(model.data)
               ,A2($Html.div,
               _U.list([]),
               _U.list([$Html.text(A2(F2(function (x,y) {
@@ -12137,7 +13010,8 @@ Elm.Matrix.make = function (_elm) {
                  return A2($Basics._op["++"],x,y);
               }),
               "Column Dimensions: ",
-              A2($String.join,", ",columnDimensionLabels)))]))]));
+              A2($String.join,", ",columnDimensionLabels)))]))
+              ,drawTable(model.data)]));
    });
    var NoOp = {ctor: "NoOp"};
    var actions = $Signal.mailbox(NoOp);
@@ -12162,64 +13036,50 @@ Elm.Matrix.make = function (_elm) {
             } else return output;
       }
    });
-   var createRandomModel = function (model) {
-      var _p0 = A2($Random$Array.shuffle,model.seed,numbers);
-      var shuffledArray = _p0._0;
-      var newSeed = _p0._1;
+   var createModel = function (model) {
       var columnDimensions = model.columnDimensions;
       var columnCount = getMemberCount(columnDimensions);
       var rowDimensions = model.rowDimensions;
       var rowCount = getMemberCount(rowDimensions);
       var neededData = A2($List.take,
       rowCount * columnCount,
-      $Array.toList(shuffledArray));
+      $Array.toList(numbers));
       var dataList = A3(partitionData,
       neededData,
       rowCount,
       _U.list([]));
       return {rowDimensions: rowDimensions
              ,columnDimensions: columnDimensions
-             ,factor: model.factor
-             ,data: dataList
-             ,seed: newSeed};
+             ,data: dataList};
    };
    var update = F2(function (action,model) {
-      var _p1 = action;
-      switch (_p1.ctor)
-      {case "CreateRandom": return createRandomModel(model);
-         case "DistToRows": return createRandomModel(distToRows(model));
-         case "DistToColumns":
-         return createRandomModel(distToColumns(model));
-         case "RegionToRows":
-         return createRandomModel(regionToRows(model));
+      var _p0 = action;
+      switch (_p0.ctor)
+      {case "CreateRandom": return createModel(model);
+         case "DistToRows": return createModel(distToRows(model));
+         case "DistToColumns": return createModel(distToColumns(model));
+         case "RegionToRows": return createModel(regionToRows(model));
          case "RegionToColumns":
-         return createRandomModel(regionToColumns(model));
-         case "QuarterToRows":
-         return createRandomModel(quarterToRows(model));
+         return createModel(regionToColumns(model));
+         case "QuarterToRows": return createModel(quarterToRows(model));
          case "QuarterToColumns":
-         return createRandomModel(quarterToColumns(model));
+         return createModel(quarterToColumns(model));
          default: return model;}
    });
    var initialModel = {rowDimensions: _U.list([])
                       ,columnDimensions: _U.list([])
-                      ,data: _U.list([])
-                      ,seed: $Random.initialSeed(42)
-                      ,factor: 10};
+                      ,data: _U.list([])};
    var model = A3($Signal.foldp,
    update,
-   createRandomModel(initialModel),
+   createModel(initialModel),
    actions.signal);
    var main = A2($Signal.map,view(actions.address),model);
    var Member = F2(function (a,b) {    return {id: a,label: b};});
    var Dimension = F3(function (a,b,c) {
       return {id: a,label: b,members: c};
    });
-   var Model = F5(function (a,b,c,d,e) {
-      return {rowDimensions: a
-             ,columnDimensions: b
-             ,data: c
-             ,seed: d
-             ,factor: e};
+   var Model = F3(function (a,b,c) {
+      return {rowDimensions: a,columnDimensions: b,data: c};
    });
    return _elm.Matrix.values = {_op: _op
                                ,Model: Model
@@ -12230,7 +13090,7 @@ Elm.Matrix.make = function (_elm) {
                                ,getMemberCount: getMemberCount
                                ,addLength: addLength
                                ,model: model
-                               ,createRandomModel: createRandomModel
+                               ,createModel: createModel
                                ,NoOp: NoOp
                                ,DistToRows: DistToRows
                                ,DistToColumns: DistToColumns
@@ -12241,6 +13101,7 @@ Elm.Matrix.make = function (_elm) {
                                ,CreateRandom: CreateRandom
                                ,update: update
                                ,dropDimension: dropDimension
+                               ,addUnique: addUnique
                                ,distToRows: distToRows
                                ,distToColumns: distToColumns
                                ,regionToRows: regionToRows
