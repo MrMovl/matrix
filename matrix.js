@@ -12750,96 +12750,7 @@ Elm.Matrix.make = function (_elm) {
                                          ,32
                                          ,66
                                          ,100
-                                         ,89
-                                         ,4
-                                         ,9
-                                         ,96
-                                         ,59
-                                         ,30
-                                         ,20
-                                         ,40
-                                         ,81
-                                         ,8
-                                         ,98
-                                         ,82
-                                         ,87
-                                         ,25
-                                         ,14
-                                         ,28
-                                         ,14
-                                         ,55
-                                         ,93
-                                         ,1
-                                         ,24
-                                         ,53
-                                         ,79
-                                         ,73
-                                         ,88
-                                         ,3
-                                         ,43
-                                         ,45
-                                         ,98
-                                         ,77
-                                         ,4
-                                         ,76
-                                         ,82
-                                         ,73
-                                         ,93
-                                         ,86
-                                         ,53
-                                         ,2
-                                         ,98
-                                         ,85
-                                         ,2
-                                         ,2
-                                         ,73
-                                         ,6
-                                         ,77
-                                         ,14
-                                         ,22
-                                         ,25
-                                         ,27
-                                         ,79
-                                         ,22
-                                         ,41
-                                         ,69
-                                         ,38
-                                         ,97
-                                         ,70
-                                         ,84
-                                         ,66
-                                         ,86
-                                         ,88
-                                         ,93
-                                         ,55
-                                         ,53
-                                         ,49
-                                         ,38
-                                         ,42
-                                         ,31
-                                         ,72
-                                         ,95
-                                         ,39
-                                         ,62
-                                         ,86
-                                         ,92
-                                         ,80
-                                         ,19
-                                         ,65
-                                         ,53
-                                         ,64
-                                         ,70
-                                         ,18
-                                         ,78
-                                         ,40
-                                         ,27
-                                         ,68
-                                         ,38
-                                         ,38
-                                         ,33
-                                         ,100
-                                         ,26
-                                         ,6]));
+                                         ,89]));
    var cellStyle = $Html$Attributes.style(_U.list([{ctor: "_Tuple2"
                                                    ,_0: "border"
                                                    ,_1: "1px solid black"}
@@ -12852,29 +12763,157 @@ Elm.Matrix.make = function (_elm) {
                                                       ,_0: "font-size"
                                                       ,_1: "16px"}
                                                      ,{ctor: "_Tuple2",_0: "font-family",_1: "monospace"}]));
-   var internet = {id: "internet",label: "internet"};
-   var phone = {id: "phone",label: "phone"};
-   var edi = {id: "edi",label: "edi"};
-   var distributionChannel = {id: "distributionChannel"
-                             ,label: "distributionChannel"
-                             ,members: _U.list([edi,internet,phone])};
-   var q2 = {id: "q2",label: "q2"};
-   var q3 = {id: "q3",label: "q3"};
-   var q4 = {id: "q4",label: "q4"};
-   var q1 = {id: "q1",label: "q1"};
-   var quarter = {id: "quarter"
-                 ,label: "quarter"
-                 ,members: _U.list([q1,q2,q3,q4])};
-   var west = {id: "west",label: "west"};
-   var north = {id: "north",label: "north"};
-   var south = {id: "south",label: "south"};
-   var east = {id: "east",label: "east"};
-   var regionCode = {id: "regionCode"
-                    ,label: "regionCode"
-                    ,members: _U.list([east,west,north,south])};
-   var allDimensions = _U.list([regionCode
-                               ,quarter
-                               ,distributionChannel]);
+   var dim2member3 = {id: "dim2member3",label: "dim2member3"};
+   var dim2member2 = {id: "dim2member2",label: "dim2member2"};
+   var dim2member1 = {id: "dim2member1",label: "dim2member1"};
+   var dimension2 = {id: "dimension2"
+                    ,label: "dimension2"
+                    ,members: _U.list([dim2member1,dim2member2,dim2member3])};
+   var dim3member4 = {id: "dim3member4",label: "dim3member4"};
+   var dim3member3 = {id: "dim3member3",label: "dim3member3"};
+   var dim3member2 = {id: "dim3member2",label: "dim3member2"};
+   var dim3member1 = {id: "dim3member1",label: "dim3member1"};
+   var dimension3 = {id: "dimension3"
+                    ,label: "dimension3"
+                    ,members: _U.list([dim3member1
+                                      ,dim3member2
+                                      ,dim3member3
+                                      ,dim3member4])};
+   var dim1member4 = {id: "dim1member4",label: "dim1member4"};
+   var dim1member3 = {id: "dim1member3",label: "dim1member3"};
+   var dim1member2 = {id: "dim1member2",label: "dim1member2"};
+   var dim1meber1 = {id: "dim1meber1",label: "dim1meber1"};
+   var dimension1 = {id: "dimension1"
+                    ,label: "dimension1"
+                    ,members: _U.list([dim1meber1
+                                      ,dim1member2
+                                      ,dim1member3
+                                      ,dim1member4])};
+   var allDimensions = _U.list([dimension1,dimension3,dimension2]);
+   var dropDimension = F2(function (list,single) {
+      return A2($List.filter,
+      function (x) {
+         return !_U.eq(x.id,single.id);
+      },
+      list);
+   });
+   var addUnique = F2(function (list,dimension) {
+      return A2($List._op["::"],
+      dimension,
+      A2(dropDimension,list,dimension));
+   });
+   var dimension3ToColumns = function (model) {
+      return {rowDimensions: A2(dropDimension,
+             model.rowDimensions,
+             dimension3)
+             ,columnDimensions: A2(addUnique,
+             model.columnDimensions,
+             dimension3)
+             ,data: model.data};
+   };
+   var dimension3ToRows = function (model) {
+      return {rowDimensions: A2(addUnique,
+             model.rowDimensions,
+             dimension3)
+             ,columnDimensions: A2(dropDimension,
+             model.columnDimensions,
+             dimension3)
+             ,data: model.data};
+   };
+   var dimension2ToColumns = function (model) {
+      return {rowDimensions: A2(dropDimension,
+             model.rowDimensions,
+             dimension2)
+             ,columnDimensions: A2(addUnique,
+             model.columnDimensions,
+             dimension2)
+             ,data: model.data};
+   };
+   var dimension2ToRows = function (model) {
+      return {rowDimensions: A2(addUnique,
+             model.rowDimensions,
+             dimension2)
+             ,columnDimensions: A2(dropDimension,
+             model.columnDimensions,
+             dimension2)
+             ,data: model.data};
+   };
+   var dimension1ToColumns = function (model) {
+      return {rowDimensions: A2(dropDimension,
+             model.rowDimensions,
+             dimension1)
+             ,columnDimensions: A2(addUnique,
+             model.columnDimensions,
+             dimension1)
+             ,data: model.data};
+   };
+   var dimension1ToRows = function (model) {
+      return {rowDimensions: A2(addUnique,
+             model.rowDimensions,
+             dimension1)
+             ,columnDimensions: A2(dropDimension,
+             model.columnDimensions,
+             dimension1)
+             ,data: model.data};
+   };
+   var partitionData = F3(function (partitionSize,output,data) {
+      partitionData: while (true) {
+         var restData = A2($List.drop,partitionSize,data);
+         var sublist = A2($List.take,partitionSize,data);
+         if (_U.cmp($List.length(data),0) > 0) {
+               var _v0 = partitionSize,
+               _v1 = A2($List._op["::"],sublist,output),
+               _v2 = restData;
+               partitionSize = _v0;
+               output = _v1;
+               data = _v2;
+               continue partitionData;
+            } else return output;
+      }
+   });
+   var addLength = F2(function (dimension,sum) {
+      return sum * $List.length(dimension.members);
+   });
+   var getMemberCount = function (dimensions) {
+      return A3($List.foldr,addLength,1,dimensions);
+   };
+   var createModel = function (model) {
+      var columnDimensions = model.columnDimensions;
+      var columnCount = getMemberCount(columnDimensions);
+      var rowDimensions = model.rowDimensions;
+      var rowCount = getMemberCount(rowDimensions);
+      var neededData = A2($List.take,
+      rowCount * columnCount,
+      $Array.toList(numbers));
+      var dataList = A3(partitionData,
+      rowCount,
+      _U.list([]),
+      neededData);
+      return {rowDimensions: rowDimensions
+             ,columnDimensions: columnDimensions
+             ,data: dataList};
+   };
+   var initialModel = {rowDimensions: _U.list([])
+                      ,columnDimensions: _U.list([])
+                      ,data: _U.list([])};
+   var update = F2(function (action,model) {
+      var _p0 = action;
+      switch (_p0.ctor)
+      {case "CreateRandom": return createModel(model);
+         case "Dimension1ToRows":
+         return createModel(dimension1ToRows(model));
+         case "Dimension1ToColumns":
+         return createModel(dimension1ToColumns(model));
+         case "Dimension2ToRows":
+         return createModel(dimension2ToRows(model));
+         case "Dimension2ToColumns":
+         return createModel(dimension2ToColumns(model));
+         case "Dimension3ToRows":
+         return createModel(dimension3ToRows(model));
+         case "Dimension3ToColumns":
+         return createModel(dimension3ToColumns(model));
+         default: return model;}
+   });
    var drawCell = function (data) {
       return A2($Html.td,
       _U.list([cellStyle]),
@@ -12892,77 +12931,13 @@ Elm.Matrix.make = function (_elm) {
       _U.list([]),
       A2($List.map,drawColumn,tableData));
    };
-   var dropDimension = F2(function (list,single) {
-      return A2($List.filter,
-      function (x) {
-         return !_U.eq(x.id,single.id);
-      },
-      list);
-   });
-   var addUnique = F2(function (list,dimension) {
-      return A2($List._op["::"],
-      dimension,
-      A2(dropDimension,list,dimension));
-   });
-   var distToRows = function (model) {
-      return {rowDimensions: A2(addUnique,
-             model.rowDimensions,
-             distributionChannel)
-             ,columnDimensions: A2(dropDimension,
-             model.columnDimensions,
-             distributionChannel)
-             ,data: model.data};
-   };
-   var distToColumns = function (model) {
-      return {rowDimensions: A2(dropDimension,
-             model.rowDimensions,
-             distributionChannel)
-             ,columnDimensions: A2(addUnique,
-             model.columnDimensions,
-             distributionChannel)
-             ,data: model.data};
-   };
-   var regionToRows = function (model) {
-      return {rowDimensions: A2(addUnique,
-             model.rowDimensions,
-             regionCode)
-             ,columnDimensions: A2(dropDimension,
-             model.columnDimensions,
-             regionCode)
-             ,data: model.data};
-   };
-   var regionToColumns = function (model) {
-      return {rowDimensions: A2(dropDimension,
-             model.rowDimensions,
-             regionCode)
-             ,columnDimensions: A2(addUnique,
-             model.columnDimensions,
-             regionCode)
-             ,data: model.data};
-   };
-   var quarterToRows = function (model) {
-      return {rowDimensions: A2(addUnique,
-             model.rowDimensions,
-             quarter)
-             ,columnDimensions: A2(dropDimension,
-             model.columnDimensions,
-             quarter)
-             ,data: model.data};
-   };
-   var quarterToColumns = function (model) {
-      return {rowDimensions: A2(dropDimension,
-             model.rowDimensions,
-             quarter)
-             ,columnDimensions: A2(addUnique,model.columnDimensions,quarter)
-             ,data: model.data};
-   };
    var CreateRandom = {ctor: "CreateRandom"};
-   var QuarterToColumns = {ctor: "QuarterToColumns"};
-   var QuarterToRows = {ctor: "QuarterToRows"};
-   var RegionToColumns = {ctor: "RegionToColumns"};
-   var RegionToRows = {ctor: "RegionToRows"};
-   var DistToColumns = {ctor: "DistToColumns"};
-   var DistToRows = {ctor: "DistToRows"};
+   var Dimension3ToColumns = {ctor: "Dimension3ToColumns"};
+   var Dimension3ToRows = {ctor: "Dimension3ToRows"};
+   var Dimension1ToColumns = {ctor: "Dimension1ToColumns"};
+   var Dimension1ToRows = {ctor: "Dimension1ToRows"};
+   var Dimension2ToColumns = {ctor: "Dimension2ToColumns"};
+   var Dimension2ToRows = {ctor: "Dimension2ToRows"};
    var view = F2(function (address,model) {
       var columnDimensionLabels = A2($List.map,
       function (x) {
@@ -12980,23 +12955,23 @@ Elm.Matrix.make = function (_elm) {
               _U.list([A2($Html$Events.onClick,address,CreateRandom)]),
               _U.list([$Html.text("Create Random")]))
               ,A2($Html.button,
-              _U.list([A2($Html$Events.onClick,address,DistToRows)]),
-              _U.list([$Html.text("Dist to rows")]))
+              _U.list([A2($Html$Events.onClick,address,Dimension1ToRows)]),
+              _U.list([$Html.text("dimension1 to rows")]))
               ,A2($Html.button,
-              _U.list([A2($Html$Events.onClick,address,DistToColumns)]),
-              _U.list([$Html.text("Dist to columns")]))
+              _U.list([A2($Html$Events.onClick,address,Dimension1ToColumns)]),
+              _U.list([$Html.text("dimension1 to columns")]))
               ,A2($Html.button,
-              _U.list([A2($Html$Events.onClick,address,RegionToRows)]),
-              _U.list([$Html.text("Region to rows")]))
+              _U.list([A2($Html$Events.onClick,address,Dimension2ToRows)]),
+              _U.list([$Html.text("dimension2 to rows")]))
               ,A2($Html.button,
-              _U.list([A2($Html$Events.onClick,address,RegionToColumns)]),
-              _U.list([$Html.text("Region to columns")]))
+              _U.list([A2($Html$Events.onClick,address,Dimension2ToColumns)]),
+              _U.list([$Html.text("dimension2 to columns")]))
               ,A2($Html.button,
-              _U.list([A2($Html$Events.onClick,address,QuarterToRows)]),
-              _U.list([$Html.text("Quarter to rows")]))
+              _U.list([A2($Html$Events.onClick,address,Dimension3ToRows)]),
+              _U.list([$Html.text("dimension3 to rows")]))
               ,A2($Html.button,
-              _U.list([A2($Html$Events.onClick,address,QuarterToColumns)]),
-              _U.list([$Html.text("Quarter to columns")]))
+              _U.list([A2($Html$Events.onClick,address,Dimension3ToColumns)]),
+              _U.list([$Html.text("dimension3 to columns")]))
               ,A2($Html.div,
               _U.list([]),
               _U.list([$Html.text(A2(F2(function (x,y) {
@@ -13015,60 +12990,6 @@ Elm.Matrix.make = function (_elm) {
    });
    var NoOp = {ctor: "NoOp"};
    var actions = $Signal.mailbox(NoOp);
-   var addLength = F2(function (dimension,sum) {
-      return sum * $List.length(dimension.members);
-   });
-   var getMemberCount = function (dimensions) {
-      return A3($List.foldr,addLength,1,dimensions);
-   };
-   var partitionData = F3(function (data,partitionSize,output) {
-      partitionData: while (true) {
-         var restData = A2($List.drop,partitionSize,data);
-         var sublist = A2($List.take,partitionSize,data);
-         if (_U.cmp($List.length(data),0) > 0) {
-               var _v0 = restData,
-               _v1 = partitionSize,
-               _v2 = A2($List._op["::"],sublist,output);
-               data = _v0;
-               partitionSize = _v1;
-               output = _v2;
-               continue partitionData;
-            } else return output;
-      }
-   });
-   var createModel = function (model) {
-      var columnDimensions = model.columnDimensions;
-      var columnCount = getMemberCount(columnDimensions);
-      var rowDimensions = model.rowDimensions;
-      var rowCount = getMemberCount(rowDimensions);
-      var neededData = A2($List.take,
-      rowCount * columnCount,
-      $Array.toList(numbers));
-      var dataList = A3(partitionData,
-      neededData,
-      rowCount,
-      _U.list([]));
-      return {rowDimensions: rowDimensions
-             ,columnDimensions: columnDimensions
-             ,data: dataList};
-   };
-   var update = F2(function (action,model) {
-      var _p0 = action;
-      switch (_p0.ctor)
-      {case "CreateRandom": return createModel(model);
-         case "DistToRows": return createModel(distToRows(model));
-         case "DistToColumns": return createModel(distToColumns(model));
-         case "RegionToRows": return createModel(regionToRows(model));
-         case "RegionToColumns":
-         return createModel(regionToColumns(model));
-         case "QuarterToRows": return createModel(quarterToRows(model));
-         case "QuarterToColumns":
-         return createModel(quarterToColumns(model));
-         default: return model;}
-   });
-   var initialModel = {rowDimensions: _U.list([])
-                      ,columnDimensions: _U.list([])
-                      ,data: _U.list([])};
    var model = A3($Signal.foldp,
    update,
    createModel(initialModel),
@@ -13085,50 +13006,50 @@ Elm.Matrix.make = function (_elm) {
                                ,Model: Model
                                ,Dimension: Dimension
                                ,Member: Member
-                               ,initialModel: initialModel
-                               ,partitionData: partitionData
-                               ,getMemberCount: getMemberCount
-                               ,addLength: addLength
-                               ,model: model
-                               ,createModel: createModel
                                ,NoOp: NoOp
-                               ,DistToRows: DistToRows
-                               ,DistToColumns: DistToColumns
-                               ,RegionToRows: RegionToRows
-                               ,RegionToColumns: RegionToColumns
-                               ,QuarterToRows: QuarterToRows
-                               ,QuarterToColumns: QuarterToColumns
+                               ,Dimension2ToRows: Dimension2ToRows
+                               ,Dimension2ToColumns: Dimension2ToColumns
+                               ,Dimension1ToRows: Dimension1ToRows
+                               ,Dimension1ToColumns: Dimension1ToColumns
+                               ,Dimension3ToRows: Dimension3ToRows
+                               ,Dimension3ToColumns: Dimension3ToColumns
                                ,CreateRandom: CreateRandom
-                               ,update: update
-                               ,dropDimension: dropDimension
-                               ,addUnique: addUnique
-                               ,distToRows: distToRows
-                               ,distToColumns: distToColumns
-                               ,regionToRows: regionToRows
-                               ,regionToColumns: regionToColumns
-                               ,quarterToRows: quarterToRows
-                               ,quarterToColumns: quarterToColumns
                                ,main: main
                                ,actions: actions
+                               ,model: model
                                ,view: view
                                ,drawTable: drawTable
                                ,drawColumn: drawColumn
                                ,drawCell: drawCell
+                               ,update: update
+                               ,initialModel: initialModel
+                               ,createModel: createModel
+                               ,getMemberCount: getMemberCount
+                               ,addLength: addLength
+                               ,partitionData: partitionData
+                               ,dimension1ToRows: dimension1ToRows
+                               ,dimension1ToColumns: dimension1ToColumns
+                               ,dimension2ToRows: dimension2ToRows
+                               ,dimension2ToColumns: dimension2ToColumns
+                               ,dimension3ToRows: dimension3ToRows
+                               ,dimension3ToColumns: dimension3ToColumns
+                               ,dropDimension: dropDimension
+                               ,addUnique: addUnique
                                ,allDimensions: allDimensions
-                               ,regionCode: regionCode
-                               ,east: east
-                               ,south: south
-                               ,north: north
-                               ,west: west
-                               ,quarter: quarter
-                               ,q1: q1
-                               ,q4: q4
-                               ,q3: q3
-                               ,q2: q2
-                               ,distributionChannel: distributionChannel
-                               ,edi: edi
-                               ,phone: phone
-                               ,internet: internet
+                               ,dimension1: dimension1
+                               ,dim1meber1: dim1meber1
+                               ,dim1member2: dim1member2
+                               ,dim1member3: dim1member3
+                               ,dim1member4: dim1member4
+                               ,dimension3: dimension3
+                               ,dim3member1: dim3member1
+                               ,dim3member2: dim3member2
+                               ,dim3member3: dim3member3
+                               ,dim3member4: dim3member4
+                               ,dimension2: dimension2
+                               ,dim2member1: dim2member1
+                               ,dim2member2: dim2member2
+                               ,dim2member3: dim2member3
                                ,generalStyle: generalStyle
                                ,labelStyle: labelStyle
                                ,cellStyle: cellStyle
